@@ -23,7 +23,7 @@ For scraping it uses simple gnu utils like sed, awk.
 cURL **nyaafet** to your **$PATH** and give execute permissions.
 
 ```sh
-$ sudo curl -sL "$link" -o /usr/local/bin/nyaafet
+$ sudo curl -sL "https://raw.githubusercontent.com/PSxUchiha/nyaafet/master/nyaafet" -o /usr/local/bin/nyaafet
 $ sudo chmod +x /usr/local/bin/nyaafet
 ```
 - To update, just do `curl` again, no need to `chmod` anymore.
