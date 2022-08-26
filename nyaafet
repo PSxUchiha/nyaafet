@@ -1,0 +1,5 @@
+#!/bin/bash
+
+query=$(printf '%s' "$*" | sed 's/ /%2B/g' )
+magnet=$(curl -s https://nyaa.iss.ink/\?q\=$query\&f\=0\&c\=0_0 | grep -Eo "magnet:\?xt=urn:btih:[a-zA-Z0-90-9?%-=&;.]*" | head -n 1)
+peerflix -l -k $magnet
