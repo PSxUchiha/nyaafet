@@ -30,7 +30,7 @@ A Bash script for interactively searching [nyaa.si](https://nyaa.si) torrents, p
 1. **Clone or download** this script.
 2. Make it executable:
 ```
-chmod +x nyaa-search.sh
+chmod +x nyaafet
 ```
 3. Ensure all dependencies are installed and available in your `$PATH`.
 
