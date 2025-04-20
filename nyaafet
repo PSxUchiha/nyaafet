@@ -62,13 +62,14 @@ search_url="https://nyaa.si/?q=$query&f=0&c=0_0&s=seeders&o=desc"
 
 readarray -t titles_array < <(curl -s "$search_url" | grep -P '/view/\d{7}"' | grep -oP 'title="\K[^"]+' | head -n "$num_entries")
 readarray -t magnets_array < <(curl -s "$search_url" | grep -Eo "magnet:\?xt=urn:btih:[a-zA-Z0-90-9?%-=&;.]*" | head -n "$num_entries")
+readarray -t size_array < <(curl -s "$search_url" | grep -oP '<td[^>]*>\K[^<]*(MiB|GiB)[^<]*' | head -n "$num_entries")
 
 for i in "${!titles_array[@]}"; do
-    echo "${titles_array[i]}|${magnets_array[i]}"
+    echo "${titles_array[i]}|${magnets_array[i]}|${size_array[i]}"
 done | \
 fzf --delimiter='|' \
     --with-nth=1 \
-    --preview='echo -e "\033[1;34mTitle:\033[0m {1}\n\n\033[1;32mMagnet Link:\033[0m\n{2}\n"' \
+    --preview='echo -e "\033[1;34mTitle:\033[0m {1}\n\n\033[1;32mMagnet Link:\033[0m\n{2}\n\n\033[1;36mSize:\033[0m {3}"' \
     --preview-window=up:70%,border-rounded,wrap \
     --bind "enter:execute(xdg-open {2})"
 
