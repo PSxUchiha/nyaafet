@@ -1,5 +1,74 @@
 #!/bin/bash
 
-query=$(printf '%s' "$*" | sed 's/ /%2B/g' )
-magnet=$(curl -s https://nyaa.iss.ink/\?q\=$query\&f\=0\&c\=0_0 | grep -Eo "magnet:\?xt=urn:btih:[a-zA-Z0-90-9?%-=&;.]*" | head -n 1)
-peerflix -l -k $magnet
+show_help() {
+    cat <<EOF
+nyaafet: Interactive Nyaa Torrent Search Tool
+
+USAGE:
+  $0 [OPTIONS] SEARCH QUERY
+
+DESCRIPTION:
+  This tool searches nyaa.iss.ink for torrents matching your query,
+  displays the top results sorted by seeders in an interactive fzf menu,
+  and lets you send the selected magnet link to your default torrent app.
+
+OPTIONS:
+  -n NUM    Number of entries to display (default: 5)
+  -h, --help  Show this help message and exit
+
+HOW TO USE:
+  $0 "your search terms"
+    - Search for torrents matching your terms, show top 5 by seeders.
+
+  $0 -n 10 "your search terms"
+    - Show top 10 results instead.
+
+INTERACTIVE USAGE:
+  - Use arrow keys or type to filter results.
+  - Preview pane shows torrent title and magnet link.
+  - Press ENTER to open the selected magnet link in your default torrent client.
+
+EXAMPLES:
+  $0 -n 7 solo leveling
+  $0 "domestic girlfriend"
+  $0 --help
+
+EOF
+}
+
+# Default number of entries
+num_entries=5
+
+# Parse options
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -n)
+            num_entries="$2"
+            shift 2
+            ;;
+        -h|--help)
+            show_help
+            exit 0
+            ;;
+        *)
+            break
+            ;;
+    esac
+done
+
+# The remaining arguments are the search query
+query=$(printf '%s' "$*" | sed 's/ /%2B/g')
+search_url="https://nyaa.si/?q=$query&f=0&c=0_0&s=seeders&o=desc"
+
+readarray -t titles_array < <(curl -s "$search_url" | grep -P '/view/\d{7}"' | grep -oP 'title="\K[^"]+' | head -n "$num_entries")
+readarray -t magnets_array < <(curl -s "$search_url" | grep -Eo "magnet:\?xt=urn:btih:[a-zA-Z0-90-9?%-=&;.]*" | head -n "$num_entries")
+
+for i in "${!titles_array[@]}"; do
+    echo "${titles_array[i]}|${magnets_array[i]}"
+done | \
+fzf --delimiter='|' \
+    --with-nth=1 \
+    --preview='echo -e "\033[1;34mTitle:\033[0m {1}\n\n\033[1;32mMagnet Link:\033[0m\n{2}\n"' \
+    --preview-window=up:70%,border-rounded,wrap \
+    --bind "enter:execute(xdg-open {2})"
+
