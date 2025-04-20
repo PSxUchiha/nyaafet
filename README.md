@@ -1,6 +1,6 @@
 # nyaafet
 
-A Bash script for interactively searching [nyaa.iss.ink](https://nyaa.iss.ink) torrents, previewing results, and sending selected magnet links directly to your default torrent client—all from your terminal.
+A Bash script for interactively searching [nyaa.si](https://nyaa.si) torrents, previewing results, and sending selected magnet links directly to your default torrent client—all from your terminal.
 
 ---
 
@@ -90,7 +90,7 @@ This script is released under the MIT License.
 ## Credits
 
 - [fzf](https://github.com/junegunn/fzf) by Junegunn Choi
-- [nyaa.iss.ink](https://nyaa.iss.ink) for torrent search data
+- [nyaa.si](https://nyaa.si) for torrent search data
 
 ---
 
