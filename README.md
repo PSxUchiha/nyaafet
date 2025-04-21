@@ -27,19 +27,36 @@ A Bash script for interactively searching [nyaa.si](https://nyaa.si) torrents, p
 
 ## Installation
 
+### If you're on Arch Linux:
+
+Run this
+
+```
+git clone --depth=1 https://github.com/PSxUchiha/nyaafet.git && cd nyaafet && makepkg -si
+```
+
+### For other linux distros
+
 1. **Clone or download** this script.
+```
+git clone --depth=1 https://github.com/PSxUchiha/nyaafet.git && cd nyaafet 
+```
 2. Make it executable:
 ```
 chmod +x nyaafet
 ```
 3. Ensure all dependencies are installed and available in your `$PATH`.
+4. Run using
+```
+./nyaafet [OPTIONS] SEARCH QUERY
+```
 
 ---
 
 ## Usage
 
 ```
-./nyaa-search.sh [OPTIONS] SEARCH QUERY
+nyaafet [OPTIONS] SEARCH QUERY
 ```
 
 - **SEARCH QUERY**: The terms to search for (e.g., `"solo leveling"`).
@@ -51,15 +68,15 @@ chmod +x nyaafet
 
 - Search for "solo leveling" (top 5 results):
 ```
-./nyaa-search.sh solo leveling
+./nyaafet solo leveling
 ```
 - Show top 10 results for "domestic girlfriend":
 ```
-./nyaa-search.sh -n 10 domestic girlfriend
+./nyaafet -n 10 domestic girlfriend
 ```
 - Show help:
 ```
-./nyaa-search.sh --help
+./nyaafet --help
 ```
 
 ---
@@ -76,14 +93,14 @@ chmod +x nyaafet
 ## Troubleshooting
 
 - If you see no results, ensure your dependencies are installed and up to date.
-- If magnet links do not open, check that `xdg-open` (Linux), `open` (macOS), or `start` (Windows) is available and your torrent client is set as the default handler for magnet links.
+- If magnet links do not open, check that `xdg-open` is available and your torrent client is set as the default handler for magnet links.
 - For best results, use GNU grep (with `-P` support).
 
 ---
 
 ## License
 
-This script is released under the MIT License.
+This script is released under the GPL3 License.
 
 ---
 
