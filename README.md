@@ -20,7 +20,7 @@ A Bash script for interactively searching [nyaa.si](https://nyaa.si) torrents, p
 - **curl** (for fetching search results)
 - **grep** (with Perl regex support, i.e., GNU grep)
 - **fzf** (interactive fuzzy finder; [install instructions](https://github.com/junegunn/fzf#installation))
-- **xdg-open** (Linux), **open** (macOS), or **start** (Windows/Git Bash)  
+- **xdg-open**
   - Used to open magnet links with your default torrent client
 
 ---
@@ -32,7 +32,8 @@ A Bash script for interactively searching [nyaa.si](https://nyaa.si) torrents, p
 Run this
 
 ```
-git clone --depth=1 https://github.com/PSxUchiha/nyaafet.git && cd nyaafet && makepkg -si
+wget https://raw.githubusercontent.com/PSxUchiha/nyaafet/refs/heads/master/PKGBUILD
+ && makepkg -si 
 ```
 
 ### For other linux distros
