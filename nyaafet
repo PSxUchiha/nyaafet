@@ -13,7 +13,7 @@ DESCRIPTION:
   and lets you send the selected magnet link to your default torrent app.
 
 OPTIONS:
-  -n NUM    Number of entries to display (default: 5)
+  -n NUM      Number of entries to display (default: 5)
   -h, --help  Show this help message and exit
 
 HOW TO USE:
@@ -55,6 +55,12 @@ while [[ $# -gt 0 ]]; do
             ;;
     esac
 done
+
+# If no search query, show help and exit
+if [[ $# -eq 0 ]]; then
+    show_help
+    exit 0
+fi
 
 # The remaining arguments are the search query
 query=$(printf '%s' "$*" | sed 's/ /%2B/g')
